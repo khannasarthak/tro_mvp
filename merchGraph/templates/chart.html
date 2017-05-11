@@ -1,0 +1,128 @@
+{% extends "layout.html" %} {% block body %}
+
+
+<div class="jumbotron">
+
+    <p class="lead">Add or remove merchants and see your total zeny for the past few days</p>
+    <hr class="my-2">
+    <div class="row">
+        <div class="col">
+            <p class="lead">Current merchants:</p>
+            <table class="table">
+                <thead class="thead-default">
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="col">
+            <p class="lead">Add new merchant or update zeny.</p>
+            <form class="form-inline">
+                <label class="sr-only" for="name">Name</label>
+                <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="name" placeholder="Merchant Name">
+
+                <label class="sr-only" for="zeny">Username</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon">z</div>
+                    <input type="text" class="form-control" id="zeny" placeholder="123123">
+                </div>
+                <button class="btn btn-success" type="button">Add new merchant</button>
+            </form>
+
+
+
+        </div>
+    </div>
+
+
+
+
+    <hr class="my-2">
+    <p class="lead">Zeny graph</p>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'area'
+            },
+            title: {
+                text: 'Historic and Estimated Worldwide Population Growth by Region'
+            },
+            subtitle: {
+                text: 'Source: Wikipedia.org'
+            },
+            xAxis: {
+                categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+                tickmarkPlacement: 'on',
+                title: {
+                    enabled: false
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Billions'
+                },
+                labels: {
+                    formatter: function () {
+                        return this.value / 1000;
+                    }
+                }
+            },
+            tooltip: {
+                split: true,
+                valueSuffix: ' millions'
+            },
+            plotOptions: {
+                area: {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666'
+                    }
+                }
+            },
+            series: [{
+                name: 'Asia',
+                data: [502, 635, 809, 947, 1402, 3634, 5268]
+    }, {
+                name: 'Africa',
+                data: [106, 107, 111, 133, 221, 767, 1766]
+    }, {
+                name: 'Europe',
+                data: [163, 203, 276, 408, 547, 729, 628]
+    }, {
+                name: 'America',
+                data: [18, 31, 54, 156, 339, 818, 1201]
+    }, {
+                name: 'Oceania',
+                data: [2, 2, 2, 6, 13, 30, 46]
+    }]
+        });
+    </script>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %} {% block body %}
+
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h5 class="display-4">Welcome to your Dashboard. What would you like to do?</h5>
+        <hr class="my-2">
+    </div>
+
+    <row>
+        <div class="card-group">
+            <div class="card">
+
+                <div class="card-block">
+                    <h4 class="card-title">Track Merchant</h4>
+                    <p class="card-text">
+                        See how much zeny you've earned over the past days.
+                    </p>
+                    <a href="{{ url_for('chart') }}" class="btn btn-primary">Track now!</a>
+                </div>
+            </div>
+
+
+
+            <div class="card">
+
+                <div class="card-block">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+    </row>
+</div>
+
+
+{% endblock %}
