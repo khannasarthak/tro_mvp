@@ -24,6 +24,11 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route("/mvpdb")
+def mvpdb():
+    return render_template('mvpdb.html')
+
+
 @app.route("/chart")
 def chart():
     labels = ["January","February","March","April","May","June","July","August"]

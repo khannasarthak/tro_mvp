@@ -1,0 +1,55 @@
+{% extends "layout.html" %} {% block body %}
+
+
+
+
+
+<div class="jumbotron">
+    <h1 class="display-4">tRO MVP Timer.</h1>
+    <hr class="my-3">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <div class="container">
+        <form method="POST" action="/q6">
+            <div id="the-basics">
+                Select MVP:
+                <input type="text" class="form-control typeahead" id="extampleField" placeholder="Type MVP name">
+            </div>
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value=""> Died just now
+            </label>
+            <br>
+            <br>
+
+            <input type="submit" class="btn btn-info" value="Update Timer">
+        </form>
+    </div>
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>MVP</th>
+                <th>Time when died</th>
+                <th>Respawning in</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Phreeoni</th>
+                <td>123123</td>
+                <td>123</td>
+            </tr>
+            <tr>
+                <th scope="row">Eddga</th>
+                <td>123123</td>
+                <td>123123</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
