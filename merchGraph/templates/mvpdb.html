@@ -9,10 +9,10 @@
     <hr class="my-3">
     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
     <div class="container">
-        <form method="POST" action="/q6">
+        <form method="POST" action="/mvpcheck">
             <div id="the-basics">
                 Select MVP:
-                <input type="text" class="form-control typeahead" id="extampleField" placeholder="Type MVP name">
+                <input type="text" class="form-control typeahead" id="extampleField" placeholder="Type MVP name" name='mvpname'>
             </div>
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value=""> Died just now
@@ -23,27 +23,32 @@
             <input type="submit" class="btn btn-info" value="Update Timer">
         </form>
     </div>
-    <table class="table">
-        <thead class="thead-inverse">
-            <tr>
-                <th>MVP</th>
-                <th>Time when died</th>
-                <th>Respawning in</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">Phreeoni</th>
-                <td>123123</td>
-                <td>123</td>
-            </tr>
-            <tr>
-                <th scope="row">Eddga</th>
-                <td>123123</td>
-                <td>123123</td>
-            </tr>
-        </tbody>
-    </table>
+    <table class="table table-striped table-bordered">
+                <thead>
+
+                  <tr>
+                    
+                      <th>Name</th>
+                      <th>Spawn Timer (in minutes)</th>
+                      <th>Last Died at (24 hour clock) </th>
+                      <th>Respawning in</th>
+                    
+                  </tr>
+
+
+                </thead>
+
+                <tbody>
+                  {% for details in mvpdetails %}
+                    <tr>                  
+                        <td>{{ details.name }}</td>
+                        <td>{{ details.lowertime }} ~ {{ details.uppertime }}</td>
+                        <td>{{ dietime }}</td>
+                        <td>{{ reslow }} ~ {{ resup }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
 </div>
 
 
