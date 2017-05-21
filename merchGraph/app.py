@@ -11,11 +11,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/tromvp'
 db = SQLAlchemy(app)
 
 
-class mvp(db.Model):
+class mvp(db.Model):	# mvp database
 	__tablename__ = 'mvp'
 	name = db.Column('name',db.Unicode, primary_key=True)
 	lowertime = db.Column('lowertime', db.Integer)
 	uppertime = db.Column('uppertime', db.Integer)
+
+class deadmvp(db.Model):   #dead mvp table
+	__tablename__ = 'deadmvp'
+	name = db.Column('name',db.Unicode, primary_key=True)
+	deathtime = db.Column('deathtime', db.Time)
+
+	def __init__(self,name, deathtime):	# needed to insert/update
+		self.name = name
+		self.deathtime = deathtime
+	
 
 
 @app.route("/")
@@ -24,6 +34,10 @@ def index():
 
 @app.route("/mvpdb",methods = ['POST', 'GET'])
 def mvpdb():	
+	test = deadmvp('Eddga (pay_fild11)','04:06')
+	print ('++++++++++', test)
+	db.session.add(test)
+	db.session.commit()
 	return render_template('mvpdb.html')
 
 @app.route("/mvpcheck",methods = ['POST', 'GET'])
@@ -32,14 +46,19 @@ def mvpcheck():
 	now = datetime.now()
 	dietime = now.strftime("%H:%M")
 	mvpdetails = mvp.query.filter(mvp.name==formname)
-	# print ('/////',mvpdetails)
+	
 	for details in mvpdetails:
 		lowtime = details.lowertime
 		uptime = details.uppertime
 	# print ("-------",lowtime,'==============',uptime)
 	reslow =  (now + timedelta(minutes=int(lowtime))).strftime("%H:%M")
 	resup  =  (now + timedelta(minutes=int(uptime))).strftime("%H:%M")
-	print ('++++', reslow,'+++',resup)
+	# print ('++++', reslow,'+++',resup)
+
+	test = deadmvp(formname,dietime)
+	print ('++++++++++', test)
+	db.session.add(test)
+	db.session.commit()
 
 	return render_template('mvpdb.html', mvpdetails = mvpdetails, dietime = dietime, reslow = reslow, resup= resup)
 
