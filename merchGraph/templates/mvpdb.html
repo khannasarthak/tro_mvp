@@ -21,17 +21,20 @@
             <br>
 
             <input type="submit" class="btn btn-info" value="Update Timer">
+            <a href= "{{ url_for('mvpdb') }}"><input type="submit" class="btn btn-info" value="Refresh Database"></a>
         </form>
+    
     </div>
     <table class="table table-striped table-bordered">
                 <thead>
 
                   <tr>
                     
-                      <th>Name</th>
-                      <th>Spawn Timer (in minutes)</th>
+                      <th>Name [Spawn Duration]</th>
+                      
                       <th>Last Died at (24 hour clock) </th>
                       <th>Respawning at:</th>
+                      <th>Respawning in:</th>
                     
                   </tr>
 
@@ -39,14 +42,14 @@
                 </thead>
 
                 <tbody>
-                  {% for details in deadmvpdetails %}{% for stuff in mvpdetails %}
+                  {% for details in mvpdetails %}
                     <tr>                  
-                        <td>{{ details.name }}</td>
-                        <td>{{ stuff.lowertime }} ~ {{ stuff.uppertime }}</td>
+                        <td>{{ details.name }} | Spawn: {{ details.lowertime }} ~ {{ details.uppertime }}</td>
                         <td>{{ details.deathtime }}</td>
-                        <td>{{ reslow }} ~ {{ resup }}</td>
+                        <td>{{ details.reslow }} ~ {{ details.resup }}</td>
+                        
                     </tr>
-                    {% endfor %}{% endfor %}
+                    {% endfor %}
                   </tbody>
             </table>
 </div>

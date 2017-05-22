@@ -16,15 +16,20 @@ class mvp(db.Model):	# mvp database
 	name = db.Column('name',db.Unicode, primary_key=True)
 	lowertime = db.Column('lowertime', db.Integer)
 	uppertime = db.Column('uppertime', db.Integer)
-
-class deadmvp(db.Model):   #dead mvp table
-	__tablename__ = 'deadmvp'
-	name = db.Column('name',db.Unicode, primary_key=True)
+	dead = db.Column('dead', db.Integer)
 	deathtime = db.Column('deathtime', db.Time)
+	reslow = db.Column('reslow', db.Time)
+	resup = db.Column('resup', db.Time)
+	date = db.Column('date', db.Date)
 
-	def __init__(self,name, deathtime):	# needed to insert/update
+
+	def __init__(self,name, deathtime, dead, reslow, resup, date):	# needed to insert/update
 		self.name = name
 		self.deathtime = deathtime
+		self.dead = dead
+		self.reslow = reslow
+		self.resup = resup
+		self.date = date
 
 class users(db.Model):   #dead mvp table
 	__tablename__ = 'users'
@@ -42,43 +47,39 @@ def index():
 
 @app.route("/mvpdb",methods = ['POST', 'GET'])
 def mvpdb():	
-	return render_template('mvpdb.html')
+
+	mvpdetails = mvp.query.filter(mvp.dead==1).order_by(mvp.date.asc()).order_by(mvp.reslow.asc())
+	return render_template('mvpdb.html', mvpdetails = mvpdetails)
 
 @app.route("/mvpcheck",methods = ['POST', 'GET'])
 def mvpcheck():	
 	formname = request.form['mvpname']
-	mvpname = deadmvp.query.filter(deadmvp.name==formname).first()
+	mvpname = mvp.query.filter(mvp.name==formname).first()
 	now = datetime.now()
 	dietime = now.strftime("%H:%M")
+
+	 
+	mvpdetails1 = mvp.query.filter(mvp.name==formname)
 	if mvpname is not None:		#Update if exists
 		# print ('EXSITS')
-		update_this = deadmvp.query.filter_by(name = formname).first()		
+		for details in mvpdetails1:
+			lowtime = details.lowertime
+			uptime = details.uppertime
+		reslow =  (now + timedelta(minutes=int(lowtime))).strftime("%H:%M")
+		resup  =  (now + timedelta(minutes=int(uptime))).strftime("%H:%M")
+		diedate = (now + timedelta(minutes=int(uptime))).strftime("%Y-%m-%d") #
+	
+		update_this = mvp.query.filter_by(name = formname).first()		
 		# print (update_this)
 		update_this.deathtime = dietime
-		# print ('AFTER UPDATE',update_this)
+		update_this.dead = 1
+		update_this.resup = resup
+		update_this.reslow = reslow
+		update_this.date = diedate
 		db.session.commit()
-	else:	# Insert if doesnt exist
-		# print ('DOESNT EXSITS')
-		row = deadmvp(formname,dietime)
-		db.session.add(row) 	# to update
-		db.session.commit()
-		 
-		
 
-	
-	mvpdetails = mvp.query.filter(mvp.name==formname)
-	deadmvpdetails = deadmvp.query.filter(mvp.name==formname)
-	
-	for details in mvpdetails:
-		lowtime = details.lowertime
-		uptime = details.uppertime
-
-	
-	reslow =  (now + timedelta(minutes=int(lowtime))).strftime("%H:%M")
-	resup  =  (now + timedelta(minutes=int(uptime))).strftime("%H:%M")
-	
-
-	return render_template('mvpdb.html', mvpdetails = mvpdetails, dietime = dietime, reslow = reslow, resup= resup, deadmvpdetails = deadmvpdetails)
+	mvpdetails = mvp.query.filter(mvp.dead==1).order_by(mvp.date.asc()).order_by(mvp.reslow.asc())
+	return render_template('mvpdb.html', mvpdetails = mvpdetails)
 
 
 @app.route("/login")
