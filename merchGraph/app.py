@@ -73,7 +73,7 @@ def mvpcheck():
 		lowtime = details.lowertime
 		uptime = details.uppertime
 
-	
+	# Trying for single database table now
 	reslow =  (now + timedelta(minutes=int(lowtime))).strftime("%H:%M")
 	resup  =  (now + timedelta(minutes=int(uptime))).strftime("%H:%M")
 	
