@@ -31,7 +31,7 @@
                       <th>Name</th>
                       <th>Spawn Timer (in minutes)</th>
                       <th>Last Died at (24 hour clock) </th>
-                      <th>Respawning in</th>
+                      <th>Respawning at:</th>
                     
                   </tr>
 
@@ -39,14 +39,14 @@
                 </thead>
 
                 <tbody>
-                  {% for details in mvpdetails %}
+                  {% for details in deadmvpdetails %}{% for stuff in mvpdetails %}
                     <tr>                  
                         <td>{{ details.name }}</td>
-                        <td>{{ details.lowertime }} ~ {{ details.uppertime }}</td>
-                        <td>{{ dietime }}</td>
+                        <td>{{ stuff.lowertime }} ~ {{ stuff.uppertime }}</td>
+                        <td>{{ details.deathtime }}</td>
                         <td>{{ reslow }} ~ {{ resup }}</td>
                     </tr>
-                    {% endfor %}
+                    {% endfor %}{% endfor %}
                   </tbody>
             </table>
 </div>
